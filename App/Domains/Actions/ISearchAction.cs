@@ -1,13 +1,14 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Salinger.Core.Domains.Entities;
 
-namespace Salinger.Core.Domains
+namespace Salinger.Core.Domains.Actions
 {
     /// <summary>
     /// Search action interface class.
     /// </summary>
-    internal interface ISearchAction
+    public interface ISearchAction
     {
         /// <summary>
         /// Start a search action. this method is async method.

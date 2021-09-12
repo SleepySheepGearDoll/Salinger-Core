@@ -1,18 +1,18 @@
 using System;
 using System.Linq;
 
-namespace Salinger.Core.Domains
+namespace Salinger.Core.Domains.Entities
 {
     /// <summary>
     /// Salinger Thread interface class.
     /// </summary>
-    internal interface ISalingerThread
+    public interface ISalingerThread
     {
         /// <summary>
         /// Thread Id.
         /// </summary>
         /// <value></value>
-        ulong Id {get; set;}
+        string Id {get; set;}
 
         /// <summary>
         /// TaskId.

@@ -9,6 +9,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 using Salinger.Core.Applications;
+using Salinger.Core.Applications.Actions;
+using Salinger.Core.Domains.Actions;
 
 namespace Salinger.Core
 {
@@ -16,12 +18,15 @@ namespace Salinger.Core
     {
         public static void Main(string[] args)
         {
+            int millisecondsDelay = 10000;
+            SalingerSearcher seacher = (SalingerSearcher)new Object();
+            ISearchAction searchAction = (ISearchAction)new Object();
             SalingerScheduler scheduler = new SalingerScheduler(2);
             List<Task> tasks = new List<Task>();
             TaskFactory factory = new TaskFactory(scheduler);
             CancellationTokenSource ctSource = new CancellationTokenSource();
+            IPollingSearchAction polling = new PollingSearchAction(millisecondsDelay, seacher, searchAction);
             Task task = factory.StartNew(() => {
-                IPollingSearchAction polling = new PollingSearchAction();
                 polling.Run();
             });
             CreateHostBuilder(args).Build().Run();

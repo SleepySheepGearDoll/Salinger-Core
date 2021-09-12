@@ -1,9 +1,9 @@
-namespace Salinger.Core.Domains
+namespace Salinger.Core.Domains.Entities
 {
     /// <summary>
     /// Message interface class.
     /// </summary>
-    internal interface IMessage
+    public interface IMessage
     {
 
         /// <summary>
