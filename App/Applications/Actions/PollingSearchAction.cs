@@ -3,7 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-
+using Salinger.Core.Domains;
 using Salinger.Core.Domains.Actions;
 using Salinger.Core.Domains.Entities;
 
@@ -27,7 +27,7 @@ namespace Salinger.Core.Applications.Actions
         /// <summary>
         /// 
         /// </summary>
-        private readonly ISearchAction searchAction;
+        private readonly ISearchActionManager manager;
 
         /// <summary>
         /// 
@@ -36,7 +36,7 @@ namespace Salinger.Core.Applications.Actions
         public PollingSearchAction(
             int millisecondsDelay,
             SalingerSearcher searcher,
-            ISearchAction searchAction
+            ISearchActionManager manager
         )
         {
             if (millisecondsDelay < 10000)
@@ -44,16 +44,16 @@ namespace Salinger.Core.Applications.Actions
                 throw new ArgumentException("millisecondsDelay");
             }
             this.millisecondsDelay = millisecondsDelay;
-            if (searcher != null)
+            if (searcher == null)
             {
                 throw new ArgumentException("searcher");
             }
             this.searcher = searcher;
-            if (searchAction != null)
+            if (manager == null)
             {
-                throw new ArgumentException("searchAction");
+                throw new ArgumentException("manager");
             }
-            this.searchAction = searchAction;
+            this.manager = manager;
         }
 
         /// <summary>
@@ -65,7 +65,8 @@ namespace Salinger.Core.Applications.Actions
             while (true)
             {
                 Console.WriteLine($"[ {DateTime.Now} ] Polling Task Run");
-                IQueryable<ISalingerThread> threads = await this.searcher.Search(this.searchAction);
+                ISearchAction action = this.manager.GetPollingSearchAction();
+                IEnumerable<ISalingerThread> threads = await this.searcher.Search(action);
                 await Task.Delay(this.millisecondsDelay);
             }
         }

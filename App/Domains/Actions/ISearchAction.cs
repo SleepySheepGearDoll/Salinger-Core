@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Salinger.Core.Domains.Entities;
@@ -16,6 +17,6 @@ namespace Salinger.Core.Domains.Actions
         /// <returns>
         /// ISalingerThread data.
         /// </returns>
-        Task<IQueryable<ISalingerThread>> Run();
+        Task<IEnumerable<ISalingerThread>> Run();
     }
 }

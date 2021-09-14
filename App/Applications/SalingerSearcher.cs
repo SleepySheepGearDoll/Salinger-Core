@@ -10,7 +10,7 @@ namespace Salinger.Core.Applications
 {
     public class SalingerSearcher
     {
-        async public Task<IQueryable<ISalingerThread>> Search (ISearchAction action)
+        async public Task<IEnumerable<ISalingerThread>> Search (ISearchAction action)
         {
             return await action.Run();
         }
